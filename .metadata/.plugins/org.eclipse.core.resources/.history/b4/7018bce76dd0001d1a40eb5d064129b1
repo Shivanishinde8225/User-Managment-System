@@ -1,0 +1,31 @@
+package com.acc.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+
+import com.acc.model.User;
+import com.acc.util.DBConnection;
+import com.mysql.cj.xdevapi.PreparableStatement;
+
+public class UserDao {
+	public static int registerUser(User user) {
+		int result = 0;
+		String query = "insert into User1 (f_name,l_name,uname,password,address,contact) values(?,?,?,?,?,?);";
+		try (Connection connection = DBConnection.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(query)){
+			
+			preparedStatement.setString(1, user.getFirstname());
+			preparedStatement.setString(2, user.getLastname());
+			preparedStatement.setString(3, user.getUname());
+			preparedStatement.setString(4, user.getPassword());
+			preparedStatement.setString(5, user.getAddress());
+			preparedStatement.setString(6, user.getContact());
+			
+			result = preparedStatement.executeUpdate();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return result;
+	}
+}

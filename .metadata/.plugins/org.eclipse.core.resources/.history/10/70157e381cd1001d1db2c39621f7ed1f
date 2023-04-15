@@ -1,0 +1,65 @@
+package com.acc.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import com.acc.model.User;
+import com.acc.util.DBConnection;
+import com.mysql.cj.protocol.Resultset;
+import com.mysql.cj.xdevapi.PreparableStatement;
+
+public class UserDao {
+	public static boolean validateUser(String name,String password) {
+		boolean status = false;
+		String query2 = "select * from User1 where uname = ? and password = ?;";
+		try (Connection connection = DBConnection.getConnection();
+				PreparedStatement preparedStatement = connection.prepareStatement(query2)){
+				
+				
+				preparedStatement.setString(1, name);
+				preparedStatement.setString(2, password);
+				
+				
+				ResultSet rs= preparedStatement.executeQuery();
+				status= rs.next();
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+		return status;
+		
+	}
+	public static int registerUser(User user) {
+		int result = 0;
+		String query = "insert into User1 (f_name,l_name,uname,password,address,contact) values(?,?,?,?,?,?);";
+		try (Connection connection = DBConnection.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(query)){
+			
+			preparedStatement.setString(1, user.getFirstname());
+			preparedStatement.setString(2, user.getLastname());
+			preparedStatement.setString(3, user.getUname());
+			preparedStatement.setString(4, user.getPassword());
+			preparedStatement.setString(5, user.getAddress());
+			preparedStatement.setString(6, user.getContact());
+			
+			result = preparedStatement.executeUpdate();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return result;
+	}
+	
+	public boolean deleteUser(int uid) throws SQLException {
+		boolean rowDeleted;
+		String query1 = "delete from User1 where uid = ?;";
+		try (Connection connection = DBConnection.getConnection();
+				PreparedStatement preparedStatement = connection.prepareStatement(query1)){
+			preparedStatement.setInt(1, uid);
+			rowDeleted = preparedStatement.executeUpdate()>0;
+		} 
+		return rowDeleted;
+		
+	}
+}

@@ -1,0 +1,19 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body bgcolor = "pink">
+<center>
+	<h2><a href = "RegistrationForm.jsp">Create User</a></h2>
+	<sql:setDataSource var = "myds"
+	driver = " "
+	>
+	<sql:query var = "ListUsers" dataSource = "${myds}">
+</center>
+	
+</body>
+</html>

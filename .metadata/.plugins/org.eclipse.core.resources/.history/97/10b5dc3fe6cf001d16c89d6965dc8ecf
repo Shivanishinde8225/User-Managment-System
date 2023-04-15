@@ -1,0 +1,5 @@
+package com.acc.model;
+
+public class User {
+
+}
